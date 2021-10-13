@@ -1,0 +1,49 @@
+import { ScatterJS, Action } from 'scatter-ts';
+import { network, getApi } from './config';
+
+export function connect() {
+  return ScatterJS.connect('pomelo.io', { network });
+}
+
+export async function login(): Promise<ScatterAccount> {
+  const connected = await connect();
+  if (!connected) return {};
+  const id = await ScatterJS.login();
+  if (!id) return {};
+  return ScatterJS.account('eos');
+}
+
+export async function getAccount() {
+  const { name, authority } = await login();
+  return { account: name, permission: authority };
+}
+
+export async function getChain() {
+  const { blockchain, chainId } = await login();
+  return { blockchain, chainId };
+}
+
+export function getWallet() {
+  const { ethereum, __wombat__ } = window as any;
+  if (!ethereum) return null;
+  if (ethereum.isTokenPocket) return 'tokenpocket';
+  if (ethereum.isMYKEY) return 'mykey';
+  if (__wombat__) return 'wombat';
+  return null;
+}
+
+export async function transact(actions: Action[]) {
+  console.log(`scatter::transact:actions: ${JSON.stringify(actions, null, 2)}`);
+  const options = { blocksBehind: 3, expireSeconds: 30 };
+  const api = getApi();
+  return api.transact({ actions }, options);
+}
+
+export interface ScatterAccount {
+  authority?: string; // "active"
+  blockchain?: string; // "eos"
+  name?: string; // "wombatfoobar"
+  publicKey?: string; // "EOS7AbxeKmdPNV6oKL5PurLse9XL32tSbhLUyg4oCiorBzvwRBeTG"
+  isHardware?: boolean; // false
+  chainId?: string; // "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906"
+}

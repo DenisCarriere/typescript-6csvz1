@@ -1,0 +1,53 @@
+:root {
+  --background: #f7f7f7;
+  --text: black;
+  --button: white;
+  --button-active: #eeeeee;
+  --button-hover: #efefef;
+}
+body {
+  background-color: #eeeeee;
+  padding: 0.25em;
+  padding-right: 1.25em;
+}
+
+textarea {
+  width: 100%;
+}
+
+* {
+  font-size: 16px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+h1 {
+  font-size: 2.25rem;
+}
+
+button {
+  padding: 0.5rem;
+  background: var(--button);
+  color: var(--text);
+  border-radius: 0.25rem;
+  width: 13rem;
+}
+
+button:active {
+  background: var(--button-active);
+}
+
+button:hover {
+  background: var(--button-hover);
+}
+/* 
+details {
+  margin: 0.75rem 0;
+} */
+
+.error {
+  color: red;
+}
+
+.success {
+  color: #11a000;
+}

@@ -16,3 +16,21 @@ export function tokenTransfer(from, to, quantity, memo) {
     },
   };
 }
+
+export function loginLink(user_id, account, sig) {
+  return {
+    account: 'd.app.login',
+    name: 'link',
+    authorization: [
+      {
+        actor: account,
+        permission: 'active',
+      },
+    ],
+    data: {
+      user_id,
+      account,
+      sig,
+    },
+  };
+}

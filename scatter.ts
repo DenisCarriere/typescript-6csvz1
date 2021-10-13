@@ -23,15 +23,6 @@ export async function getChain() {
   return { blockchain, chainId };
 }
 
-export function getWallet() {
-  const { ethereum, __wombat__ } = window as any;
-  if (!ethereum) return null;
-  if (ethereum.isTokenPocket) return 'tokenpocket';
-  if (ethereum.isMYKEY) return 'mykey';
-  if (__wombat__) return 'wombat';
-  return null;
-}
-
 export async function transact(actions: Action[]) {
   console.log(`scatter::transact:actions: ${JSON.stringify(actions, null, 2)}`);
   const options = { blocksBehind: 3, expireSeconds: 30 };
